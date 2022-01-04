@@ -7,10 +7,10 @@ import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
 
 
-const LoginEnterCredentialsScreen = () => {
+const LoginSendEmailScreen = () => {
     const navigation = useNavigation()
-    const handleLogInByEnteringCredentials = () => {
-      navigation.replace("Login");
+    const handleLogInByEnteringEmail = () => {
+      navigation.replace("LoginEnterCode");
     }
     return (
     <KeyboardAvoidingView
@@ -22,25 +22,24 @@ const LoginEnterCredentialsScreen = () => {
         })()
       }
     >
-        <Text style={styles.textStyle}>Enter User Credentials</Text>
+        <Text style={styles.textStyle}>Enter Your E-Mail Address</Text>
         <View style={styles.buttonContainer}>
-        <CustomTextInput text={"USERNAME/E-MAIL ADDRESS"}>
+        <CustomTextInput text={"E-MAIL ADDRESS"}>
         </CustomTextInput>
-        <SecureTextInput text={"PASSWORD"}>
-        </SecureTextInput>
-        <PurpleButton text={"AUTHENTICATE"} onPress={handleLogInByEnteringCredentials}>
+        <PurpleButton text={"CONFIRM ADDRESS"} onPress={handleLogInByEnteringEmail}>
         </PurpleButton>
-        
+        <Text style={styles.textStyle}>*We will send you an E-Mail 
+        that contains an unique code.
+        Afterwards, simply enter 
+        the recieved code to complete 
+        the authentication process.
+        </Text>
        </View>
-      <View style={styles.button}>
-        <TransparentButton text={"FORGOT PASSWORD?"}>
-        </TransparentButton>
-      </View>
     </KeyboardAvoidingView>
     )
 }
 
-export default LoginEnterCredentialsScreen
+export default LoginSendEmailScreen
 
 const styles = StyleSheet.create({
     container: {

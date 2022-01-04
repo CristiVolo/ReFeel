@@ -7,7 +7,7 @@ import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
 
 
-const LoginEnterCredentialsScreen = () => {
+const LoginEnterCodeScreen = () => {
     const navigation = useNavigation()
     const handleLogInByEnteringCredentials = () => {
       navigation.replace("Login");
@@ -22,25 +22,26 @@ const LoginEnterCredentialsScreen = () => {
         })()
       }
     >
-        <Text style={styles.textStyle}>Enter User Credentials</Text>
+        <Text style={styles.textStyle}>Enter the received code</Text>
         <View style={styles.buttonContainer}>
-        <CustomTextInput text={"USERNAME/E-MAIL ADDRESS"}>
-        </CustomTextInput>
-        <SecureTextInput text={"PASSWORD"}>
+        <SecureTextInput text={"CODE"}>
         </SecureTextInput>
         <PurpleButton text={"AUTHENTICATE"} onPress={handleLogInByEnteringCredentials}>
         </PurpleButton>
-        
+        <PurpleButton text={"RESEND CODE"} onPress={handleLogInByEnteringCredentials}>
+        </PurpleButton>
+        <PurpleButton text={"CHANGE PROCEDURE"} onPress={handleLogInByEnteringCredentials}>
+        </PurpleButton>
+        <Text style={styles.textStyle}>*You can either re-enter your data
+        and resend the code, or change 
+        the authentication procedure.
+        </Text>
        </View>
-      <View style={styles.button}>
-        <TransparentButton text={"FORGOT PASSWORD?"}>
-        </TransparentButton>
-      </View>
     </KeyboardAvoidingView>
     )
 }
 
-export default LoginEnterCredentialsScreen
+export default LoginEnterCodeScreen
 
 const styles = StyleSheet.create({
     container: {

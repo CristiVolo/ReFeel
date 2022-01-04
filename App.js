@@ -4,8 +4,11 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen';
-import HomeScreen from './screens/HomeScreen';
 import LoginEnterCredentialsScreen from './screens/LoginEnterCredentialsScreen';
+import LoginSendEmailScreen from './screens/LoginSendEmailScreen';
+import LoginSendSMSScreen from './screens/LoginSendSMSScreen';
+import LoginEnterCodeScreen from './screens/LoginEnterCodeScreen';
+import SignUpScreen from './screens/SignUpScreen';
 
 
 const Stack = createNativeStackNavigator(
@@ -17,8 +20,11 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
-        <Stack.Screen options={{headerShown: false}} name="Home" component={HomeScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginEnterCredentials" component={LoginEnterCredentialsScreen} />
+        <Stack.Screen options={{headerShown: false}} name="LoginSendEmail" component={LoginSendEmailScreen} />
+        <Stack.Screen options={{headerShown: false}} name="LoginSendSMS" component={LoginSendSMSScreen} />
+        <Stack.Screen options={{headerShown: false}} name="LoginEnterCode" component={LoginEnterCodeScreen} />
+        <Stack.Screen options={{headerShown: false}} name="SignUp" component={SignUpScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
