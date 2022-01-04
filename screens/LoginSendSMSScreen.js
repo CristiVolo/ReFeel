@@ -7,10 +7,10 @@ import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
 
 
-const LoginEnterCredentialsScreen = () => {
+const LoginSendSMSScreen = () => {
     const navigation = useNavigation()
-    const handleLogInByEnteringCredentials = () => {
-      navigation.replace("Login");
+    const handleLogInByEnteringSMS = () => {
+      navigation.replace("LoginEnterCode");
     }
     return (
     <KeyboardAvoidingView
@@ -22,25 +22,24 @@ const LoginEnterCredentialsScreen = () => {
         })()
       }
     >
-        <Text style={styles.textStyle}>Enter User Credentials</Text>
+        <Text style={styles.textStyle}>Enter Your Phone Number</Text>
         <View style={styles.buttonContainer}>
-        <CustomTextInput text={"USERNAME/E-MAIL ADDRESS"}>
+        <CustomTextInput text={"Phone Number"}>
         </CustomTextInput>
-        <SecureTextInput text={"PASSWORD"}>
-        </SecureTextInput>
-        <PurpleButton text={"AUTHENTICATE"} onPress={handleLogInByEnteringCredentials}>
+        <PurpleButton text={"CONFIRM NUMBER"} onPress={handleLogInByEnteringSMS}>
         </PurpleButton>
-        
+        <Text style={styles.textStyle}>*We will send you an SMS 
+        that contains an unique code.
+        Afterwards, simply enter 
+        the recieved code to complete 
+        the authentication process.
+        </Text>
        </View>
-      <View style={styles.button}>
-        <TransparentButton text={"FORGOT PASSWORD?"}>
-        </TransparentButton>
-      </View>
     </KeyboardAvoidingView>
     )
 }
 
-export default LoginEnterCredentialsScreen
+export default LoginSendSMSScreen
 
 const styles = StyleSheet.create({
     container: {

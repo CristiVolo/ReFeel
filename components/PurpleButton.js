@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 
-const LargeButton = (props) => {
+const PurpleButton = (props) => {
     return (
         <TouchableOpacity style={styles.purpleButton} onPress={props.onPress}>
             <Text style={styles.itemText}>{props.text}</Text>
@@ -9,7 +9,7 @@ const LargeButton = (props) => {
     )
 }
 
-export default LargeButton
+export default PurpleButton
 
 const styles = StyleSheet.create({
 purpleButton:{
@@ -18,7 +18,8 @@ purpleButton:{
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 20
 },
 itemText:{
     color: '#FFE600',
