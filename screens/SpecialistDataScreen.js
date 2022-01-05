@@ -7,9 +7,9 @@ import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
 
 
-const LoginEnterCredentialsScreen = () => {
+const SpecialistDataScreen = () => {
     const navigation = useNavigation()
-    const handleLogInByEnteringCredentials = () => {
+    const handleRegistration = () => {
       navigation.replace("Login");
     }
     return (
@@ -22,25 +22,22 @@ const LoginEnterCredentialsScreen = () => {
         })()
       }
     >
-        <Text style={styles.textStyle}>Enter User Credentials</Text>
+        <Text style={styles.textStyle}>Enter your office address : </Text>
         <View style={styles.buttonContainer}>
-        <CustomTextInput text={"E-MAIL ADDRESS"}>
+        <CustomTextInput text={"Street"}>
         </CustomTextInput>
-        <SecureTextInput text={"PASSWORD"}>
-        </SecureTextInput>
-        <PurpleButton text={"AUTHENTICATE"} onPress={handleLogInByEnteringCredentials}>
+        <CustomTextInput text={"Number"}>
+        </CustomTextInput>
+        <CustomTextInput text={"City"}>
+        </CustomTextInput>
+        <PurpleButton text={"COMPLETE REGISTRATION"} onPress={handleRegistration}>
         </PurpleButton>
-        
        </View>
-      <View style={styles.button}>
-        <TransparentButton text={"FORGOT PASSWORD?"}>
-        </TransparentButton>
-      </View>
     </KeyboardAvoidingView>
     )
 }
 
-export default LoginEnterCredentialsScreen
+export default SpecialistDataScreen
 
 const styles = StyleSheet.create({
     container: {

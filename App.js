@@ -9,6 +9,7 @@ import LoginSendEmailScreen from './screens/LoginSendEmailScreen';
 import LoginSendSMSScreen from './screens/LoginSendSMSScreen';
 import LoginEnterCodeScreen from './screens/LoginEnterCodeScreen';
 import SignUpScreen from './screens/SignUpScreen';
+import SpecialistDataScreen from './screens/SpecialistDataScreen'
 
 
 const Stack = createNativeStackNavigator(
@@ -25,6 +26,7 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="LoginSendSMS" component={LoginSendSMSScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginEnterCode" component={LoginEnterCodeScreen} />
         <Stack.Screen options={{headerShown: false}} name="SignUp" component={SignUpScreen} />
+        <Stack.Screen options={{headerShown: false}} name="SpecialistData" component={SpecialistDataScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
