@@ -6,6 +6,8 @@ const CustomTextInput = (props) => {
         <TextInput
           placeholder={props.text}
           style={[styles.input, styles.inputOutline]}
+          value={props.email}
+          onChangeText={text => props.setEmail(text)}
         />
     )
 }

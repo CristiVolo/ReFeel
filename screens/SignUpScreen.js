@@ -1,21 +1,43 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
 import { KeyboardAvoidingView,StyleSheet, Text,TextInput, View, TouchableOpacity, ScrollView } from 'react-native'
 import PurpleButton from '../components/PurpleButton'
 import TransparentButton from '../components/TransparentButton'
+import React, { useEffect, useState } from 'react'
 import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
 import ModalDropdown from 'react-native-modal-dropdown';
+import { auth } from '../config/firebase'
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
 const SignUpScreen = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+    let role='';
+
     const navigation = useNavigation()
     const handleRegistration = () => {
-      navigation.replace("Login");
+      if(role == '1')
+        navigation.replace("SpecialistData");
+      else
+      {
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          // Signed in 
+          const user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          // ..
+        });
+      }
     }
 
     const handleSelect=(e)=> {
-      console.log(e);
+      role=e;
     }
     return (
     <ScrollView >
@@ -29,7 +51,7 @@ const SignUpScreen = () => {
       }
     >
         <View style={styles.buttonContainer}>
-
+  
         <Text style={styles.textStyle}>Enter Your fisrt and last names : </Text>
         <CustomTextInput text={"e.g: John"}>
         </CustomTextInput>
@@ -41,18 +63,26 @@ const SignUpScreen = () => {
         <CustomTextInput text={"e.g: JohnD1@!67"}>
         </CustomTextInput>
 
-        <CustomTextInput text={"e.g: xavarin@gmail.com"}>
+        <CustomTextInput text={"e.g: xavarin@gmail.com"} email={email} setEmail={setEmail}>
         </CustomTextInput>
 
         <Text style={styles.textStyle}>Enter your phone number : </Text>
         <CustomTextInput text={"Phone Number"}>
         </CustomTextInput>
 
-        <Text style={styles.textStyle}>Enter your password : </Text>
-        <SecureTextInput text={"Password"}>
+        <Text style={styles.textStyle}>Enter your secret question and an answer : </Text>
+
+        <ModalDropdown
+          defaultValue='Select'
+          options={['What was your first pet?', 'What was the model of your first car?', 'In what city were you born?', "What was your father's middle name?", 'What was your childhood nickname?']}
+          style={[styles.dropdownStyle, styles.dropdownStyle2]}
+        />
+
+        <SecureTextInput text={"Answer"}>
         </SecureTextInput>
 
-        <SecureTextInput text={"Confirm Password"}>
+        <Text style={styles.textStyle}>Enter your password : </Text>
+        <SecureTextInput text={"Password"} password={password} setPassword={setPassword}>
         </SecureTextInput>
 
         <Text style={styles.textStyle}>Select your role : </Text>
