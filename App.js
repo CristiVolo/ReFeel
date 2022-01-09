@@ -12,7 +12,7 @@ import SignUpScreen from './screens/SignUpScreen';
 import SpecialistDataScreen from './screens/SpecialistDataScreen'
 import home from './screens/home'
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
-
+import MapScreen from './screens/MapScreen';
 
 
 const Stack = createNativeStackNavigator(
@@ -23,6 +23,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen options={{headerShown: false}} name="Map" component={MapScreen} />
         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginEnterCredentials" component={LoginEnterCredentialsScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginSendEmail" component={LoginSendEmailScreen} />
