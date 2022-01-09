@@ -1,36 +1,32 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import React, {useState} from 'react'
 import { KeyboardAvoidingView,StyleSheet, Text,TextInput, View, TouchableOpacity } from 'react-native'
 import PurpleButton from '../components/PurpleButton'
 import TransparentButton from '../components/TransparentButton'
 import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
 import { auth } from '../config/firebase'
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 
-const SpecialistDataScreen = ({ navigation: { navigate }, route }) => {
-  
+const LoginEnterCodeScreen = () => {
+    const navigation = useNavigation()
+    const [email, setEmail] = useState('')
 
-    const email = route.params.email;
-    const password = route.params.password;
-    const handleRegistration = () => {
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          // Signed in 
-          const user = userCredential.user;
-          navigate('Login');
-          
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-        });
+    const handleConfirmEmail = () => {
+    
+        sendPasswordResetEmail(auth, email)
+          .then(function (user) {
+            alert('Please check your email...')
+          }).catch(function (e) {
+            console.log(e)
+          })
+      
     }
 
-    const setText = () => {}
+    const handleBackToLogin = () => {
+        navigation.replace("Login");
+    }
 
     return (
     <KeyboardAvoidingView
@@ -42,22 +38,20 @@ const SpecialistDataScreen = ({ navigation: { navigate }, route }) => {
         })()
       }
     >
-        <Text style={styles.textStyle}>Enter your office address : </Text>
+        <Text style={styles.textStyle}>Enter your E-Mail: </Text>
         <View style={styles.buttonContainer}>
-        <CustomTextInput text={"Street"} setText={setText}>
+        <CustomTextInput text={"E-Mail"} setText={setEmail}>
         </CustomTextInput>
-        <CustomTextInput text={"Number"} setText={setText}>
-        </CustomTextInput>
-        <CustomTextInput text={"City"} setText={setText}>
-        </CustomTextInput>
-        <PurpleButton text={"COMPLETE REGISTRATION"} onPress={handleRegistration}>
+        <PurpleButton text={"CONFIRM"} onPress={handleConfirmEmail}>
+        </PurpleButton>
+        <PurpleButton text={"BACK TO LOGIN PAGE"} onPress={handleBackToLogin}>
         </PurpleButton>
        </View>
     </KeyboardAvoidingView>
     )
 }
 
-export default SpecialistDataScreen
+export default LoginEnterCodeScreen
 
 const styles = StyleSheet.create({
     container: {

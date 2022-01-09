@@ -10,16 +10,15 @@ import { auth } from '../config/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation: { navigate } }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
     let role='';
 
-    const navigation = useNavigation()
     const handleRegistration = () => {
       if(role == '1')
-        navigation.replace("SpecialistData");
+        navigate("SpecialistData", {email: email, password: password});
       else
       {
         createUserWithEmailAndPassword(auth, email, password)
@@ -63,7 +62,7 @@ const SignUpScreen = () => {
         <CustomTextInput text={"e.g: JohnD1@!67"}>
         </CustomTextInput>
 
-        <CustomTextInput text={"e.g: xavarin@gmail.com"} email={email} setEmail={setEmail}>
+        <CustomTextInput text={"e.g: xavarin@gmail.com"} email={email} setText={setEmail}>
         </CustomTextInput>
 
         <Text style={styles.textStyle}>Enter your phone number : </Text>
