@@ -25,7 +25,7 @@ const MapScreen = () => {
                         console.log(data, details);
                     }}
                     query={{
-                        key: 'AIzaSyCHNsgAU5x_rY7-F81Qjkfe3Dx7L0FCyso',
+                        key: `AIzaSyAqun3jSd8xtOHVfJVeTLfmofqeTxmhmFk`,
                         language: 'en'
                     }}
                     styles={{
