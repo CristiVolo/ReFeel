@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from "firebase/auth";
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -12,7 +13,11 @@ const firebaseConfig = {
     measurementId: "G-GBD713XE36"
 };
 
+// Authentication
 const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 
-export { auth };
+// Firestore
+const firestore = getFirestore();
+
+export { auth, firestore };

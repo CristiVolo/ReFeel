@@ -1,30 +1,42 @@
 import { useNavigation } from '@react-navigation/native'
 import React, {useEffect, useState} from 'react'
-import { KeyboardAvoidingView,StyleSheet, Text,TextInput, View, TouchableOpacity } from 'react-native'
+import { KeyboardAvoidingView,StyleSheet, Text,TextInput, View, TouchableOpacity, BackHandler } from 'react-native'
 import PurpleButton from '../components/PurpleButton'
 import TransparentButton from '../components/TransparentButton'
 import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
-import { auth } from '../config/firebase'
+import { auth, firestore } from '../config/firebase'
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 
 
+
 const LoginEnterCredentialsScreen = () => {
+
+
+    // Navigation
     const navigation = useNavigation()
 
+
+    // Set states for email and password
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+
+    // Use of useEffect hook on logout
     useEffect(() => {
+
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
           navigation.replace("home");
         } 
       })
   
-      return unsubscribe
-    }, [])
+      return unsubscribe;
 
+    }, [])
+    
+
+    // Login
     const handleLogInByEnteringCredentials = () => {
 
       signInWithEmailAndPassword(auth, email, password)
@@ -40,40 +52,51 @@ const LoginEnterCredentialsScreen = () => {
 
     }
 
+
+    // Go to the "Forgot Password" screen
     const handleForgotPassword = () => {
       navigation.replace("ForgotPassword");
     }
 
-    const defaultFunction=()=> {
-    }
 
+    // Return value of the screen
     return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior="padding"
-      keyboardVerticalOffset={
-        Platform.select({
-           android: () => -300
-        })()
-      }
-    >
-        <Text style={styles.textStyle}>Enter User Credentials</Text>
-        <View style={styles.buttonContainer}>
-        <CustomTextInput text={"E-MAIL ADDRESS"} setText={setEmail}>
-        </CustomTextInput>
-        <SecureTextInput text={"PASSWORD"} setPassword={setPassword}>
-        </SecureTextInput>
-        <PurpleButton text={"AUTHENTICATE"} onPress={handleLogInByEnteringCredentials}>
-        </PurpleButton>
-        
-       </View>
-      <View style={styles.button}>
-        <TransparentButton text={"FORGOT PASSWORD?"} onPress={handleForgotPassword}>
-        </TransparentButton>
-      </View>
-    </KeyboardAvoidingView>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={
+          Platform.select({
+            android: () => -300
+          })()
+        }
+      >
+
+          {/* E-Mail and Password are required for login */}
+          <Text style={styles.textStyle}>Enter User Credentials</Text>
+          <View style={styles.buttonContainer}>
+
+            <CustomTextInput text={"E-MAIL ADDRESS"} setText={setEmail}>
+            </CustomTextInput>
+            <SecureTextInput text={"PASSWORD"} setPassword={setPassword}>
+            </SecureTextInput>
+            <PurpleButton text={"AUTHENTICATE"} onPress={handleLogInByEnteringCredentials}>
+            </PurpleButton>
+            
+          </View>
+
+          {/* Go to "ForgotPassword" screen */}
+          <View style={styles.button}>
+            <TransparentButton text={"FORGOT PASSWORD?"} onPress={handleForgotPassword}>
+            </TransparentButton>
+          </View>
+
+      </KeyboardAvoidingView>
     )
+
+
 }
+
+
 
 export default LoginEnterCredentialsScreen
 
