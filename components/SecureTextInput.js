@@ -6,8 +6,11 @@ const SecureTextInput = (props) => {
         <TextInput
           placeholder={props.text}
           style={[styles.input, styles.inputOutline]}
-          value={props.password}
-          onChangeText={text => props.setPassword(text)}
+          value={props.value}
+          onChangeText={text => props.setText(text)}
+          onChange={(e) => {
+            console.log(e.nativeEvent.text)
+          }}
           secureTextEntry
         />
     )
