@@ -13,6 +13,8 @@ import SpecialistDataScreen from './screens/SpecialistDataScreen'
 import home from './screens/home'
 import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 import MapScreen from './screens/MapScreen';
+import OfficePageScreen from './screens/OfficePageScreen';
+import MakeAppointmentScreen from './screens/MakeAppointmentScreen';
 
 
 const Stack = createNativeStackNavigator(
@@ -23,6 +25,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen options={{headerShown: false}} name="OfficePage" component={OfficePageScreen} />
+        <Stack.Screen options={{headerShown: false}} name="MakeAppointment" component={MakeAppointmentScreen} />
         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginEnterCredentials" component={LoginEnterCredentialsScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginSendEmail" component={LoginSendEmailScreen} />

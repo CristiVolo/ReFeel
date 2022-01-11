@@ -45,6 +45,11 @@ const LoginScreen = () => {
         <KeyboardAvoidingView
       style={styles.container}
       behavior="padding"
+      keyboardVerticalOffset={
+        Platform.select({
+           android: () => -300
+        })()
+      }
     >
         <Text style={styles.textStyle}>How would you like to log in ?</Text>
         <View style={styles.buttonContainer}>
