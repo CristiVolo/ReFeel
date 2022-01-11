@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
-import { KeyboardAvoidingView,StyleSheet, Text,TextInput, View, TouchableOpacity } from 'react-native'
+import React, {useEffect} from 'react'
+import { KeyboardAvoidingView,StyleSheet, Text,TextInput, View, TouchableOpacity, BackHandler, Alert } from 'react-native'
 import PurpleButton from '../components/PurpleButton'
 import TransparentButton from '../components/TransparentButton'
 
@@ -21,6 +21,25 @@ const LoginScreen = () => {
     const handleSignUp = () => {
       navigation.replace("SignUp");
     }
+
+    // Exit app
+    // useEffect(() => {
+    //   const backAction = () => {
+    //     Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+    //       {
+    //         text: 'Cancel',
+    //         onPress: () => null,
+    //         style: 'cancel',
+    //       },
+    //       { text: 'YES', onPress: () => BackHandler.exitApp() },
+    //     ]);
+    //     return true;
+    //   };
+  
+    //   const backHandler = BackHandler.addEventListener('hardwareBackPress', backAction);
+  
+    //   return () => backHandler.remove();
+    // }, []);
 
     return (
         <KeyboardAvoidingView
