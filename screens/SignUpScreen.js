@@ -57,6 +57,11 @@ const SignUpScreen = () => {
   //   }
 
   // }
+
+  const handleBack = () =>{
+    navigation.replace("Login");
+  }
+
   const handleRegistration = async () => {
 
     // Creates a new user
@@ -206,6 +211,8 @@ const SignUpScreen = () => {
             <PurpleButton text={"REGISTER"} onPress={handleRegistration}>
             </PurpleButton>
             {/* ------------------ */}
+            <PurpleButton text={"BACK"} onPress={handleBack}>
+            </PurpleButton>
 
           </View>
 

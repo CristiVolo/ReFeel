@@ -74,6 +74,10 @@ const LoginEnterCredentialsScreen = () => {
       navigation.replace("ForgotPassword");
     }
 
+    const handleBack = () => {
+      navigation.replace("Login");
+    }
+
 
     // Return value of the screen
     return (
@@ -96,6 +100,8 @@ const LoginEnterCredentialsScreen = () => {
             <SecureTextInput text={"PASSWORD"} setText={setPassword}>
             </SecureTextInput>
             <PurpleButton text={"AUTHENTICATE"} onPress={handleLogInByEnteringCredentials}>
+            </PurpleButton>
+            <PurpleButton text={"BACK"} onPress={handleBack}>
             </PurpleButton>
             
           </View>

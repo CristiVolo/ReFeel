@@ -36,8 +36,9 @@ const AppointmentListForUserScreen = ({ navigation: { navigate }, route }) => {
         <View style={styles.buttonContainer}>
             {
                 route.params.querySnapshot.forEach((doc) => {
-                    array.push(<AppointmentBoxSpecialist name={doc.data().specialist.firstName+" "+doc.data().specialist.lastName} date={doc.data().date} time={doc.data().time+":00"} description={doc.data().shortDescription} clear={defaultFunction}>
+                    array.push(<AppointmentBoxSpecialist name={doc.data().specialistFirstName+" "+doc.data().specialistLastName} date={doc.data().date} time={doc.data().time+":00"} description={doc.data().shortDescription} clear={defaultFunction}>
                     </AppointmentBoxSpecialist>)
+                    console.log(doc.data().specialistLastName)
                   })
             }
             {

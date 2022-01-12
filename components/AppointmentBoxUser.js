@@ -13,9 +13,6 @@ const AppointmentBoxUser = (props) => {
             <Text>{props.date}</Text>
             <Text>{props.time}</Text>
             <Text>{props.address}</Text>
-            <View style={styles.buttonStyle}>
-                <PurpleButton text={'CLEAR'} onPress={props.clear}></PurpleButton>
-            </View>
         </View>
         
     )
