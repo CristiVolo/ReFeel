@@ -22,7 +22,7 @@ const SpecialistDataScreen = () => {
   const [officeNumber, setOfficeNumber] = useState('')
   const [officeStreet, setOfficeStreet] = useState('')
   const [shortDescription, setShortDescription] = useState('')
-  const [website, setWebsite] = useState('')
+  // const [website, setWebsite] = useState('')
 
 
   const finishRegistration = () => {
