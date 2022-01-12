@@ -3,32 +3,23 @@ import React from 'react'
 import { KeyboardAvoidingView,StyleSheet, Text,TextInput, View, TouchableOpacity, ScrollView} from 'react-native'
 import PurpleButton from '../components/PurpleButton'
 import TransparentButton from '../components/TransparentButton'
-import AppointmentBoxUser from '../components/AppointmentBoxUser'
-import { doc, getDoc } from "firebase/firestore";
+import AppointmentBoxSpecialist from '../components/AppointmentBoxSpecialist'
 import { auth, firestore, fsdb } from '../config/firebase'
 
-const AppointmentListForUserScreen = () => {
+const AppointmentListForUserScreen = ({ navigation: { navigate }, route }) => {
     
-    let specialistNameExample = 'Popescu Silvia'
+    let nameExample = 'Popescu Silvia'
     let dateExample = '11.01.2022'
     let timeExample = '14:00'
-    let addressExample = 'Calea Aradului nr. 48'
-    let statusExample = 'Not accepted by doctor yet'
-    
-    const defaultFunction = async() => {
-      const docRef = doc(fsdb, "appointments", "templateAppointment");
-      const docSnap = await getDoc(docRef);
-
-      if (docSnap.exists()) {
-        console.log("Document data:", docSnap.data().age);
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-}
+    let descriptionExample = 'ceva descriere a unei probleme'
+    let array=[];
+    const defaultFunction = () => {
+        
     }
 
-    
-    
+    const handleBack = () =>{
+        navigate('Map');
+    }
 
     return (
         <KeyboardAvoidingView
@@ -40,15 +31,26 @@ const AppointmentListForUserScreen = () => {
         })()
       }
     >
-        <Text style={styles.textStyle}s>Your Appointments :</Text>
+        <Text style={styles.textStyle}s>Appointments :</Text>
         <ScrollView style={styles.scrollStyle}>
         <View style={styles.buttonContainer}>
-          <AppointmentBoxUser specialistName={specialistNameExample} date={dateExample} time={timeExample} address={addressExample} status={statusExample} clear={defaultFunction}>
-          </AppointmentBoxUser>
+            {
+                route.params.querySnapshot.forEach((doc) => {
+                    array.push(<AppointmentBoxSpecialist name={doc.data().specialist.firstName+" "+doc.data().specialist.lastName} date={doc.data().date} time={doc.data().time+":00"} description={doc.data().shortDescription} clear={defaultFunction}>
+                    </AppointmentBoxSpecialist>)
+                  })
+            }
+            {
+                array.map((item, index) => {
+                    return (
+                      item
+                    )
+                  })
+            }
         </View>
         </ScrollView>
         <View style={styles.button}>
-        <PurpleButton text={'BACK'} onPress={defaultFunction}></PurpleButton>
+        <PurpleButton text={'BACK'} onPress={handleBack}></PurpleButton>
         </View>
     </KeyboardAvoidingView>
     )

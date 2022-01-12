@@ -1,12 +1,38 @@
 import React from 'react';
 import MapView, { Marker, Callout, Circle } from 'react-native-maps';
-import { Platform, StyleSheet, Text, SafeAreaView, Dimensions } from 'react-native';
+import { Platform, StyleSheet, Text, SafeAreaView, Dimensions, View } from 'react-native';
 import { render } from 'react-dom';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import axios from 'axios';
 import { extractQuerystring } from '@firebase/util';
+import PurpleButton from '../components/PurpleButton'
+import { auth, firestore, fsdb } from '../config/firebase'
+import { signOut } from "firebase/auth";
+import { useNavigation } from '@react-navigation/native'
+import { doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const MapScreen = () => {
+
+    const navigation = useNavigation()
+    const defaultFunction = () =>{
+
+    }
+
+    const handleSeeAppointments = async () => {
+        const userRef = doc(fsdb, 'users', auth.currentUser.uid);
+        const q = query(collection(fsdb, "appointments"), where("defaultUser", "==", userRef), where("status", "==", true))
+        const querySnapshot = await getDocs(q);
+        navigation.navigate('AppointmentListForUser', {querySnapshot: querySnapshot});
+    }
+
+    const handleSignOut = () => {
+        signOut(auth).then(() => {
+        navigation.replace("Login");
+        }).catch((error) => {
+        // An error happened.
+        });
+      }
 
     const [ pin, setPin ] = React.useState({
         latitude: 45.7379433,
@@ -81,6 +107,10 @@ const MapScreen = () => {
 
     return (
         <SafeAreaView style={styles.temporary}>
+            <View style={styles.buttons}>
+            <PurpleButton text={"SIGN OUT"} onPress={handleSignOut}></PurpleButton>
+            <PurpleButton text={"APPOINTMENTS"} onPress={handleSeeAppointments}></PurpleButton>
+            </View>
             <SafeAreaView style={{height: 50}}>
                 <GooglePlacesAutocomplete
                     placeholder="🔍 Search for a specialists' office"
@@ -168,5 +198,11 @@ const styles = StyleSheet.create({
   map: {
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
+  },
+
+  buttons :{
+      width: 100,
+      flexDirection: 'row',
+      marginLeft: 70,
   }
 })
