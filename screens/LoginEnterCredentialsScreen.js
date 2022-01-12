@@ -5,8 +5,9 @@ import PurpleButton from '../components/PurpleButton'
 import TransparentButton from '../components/TransparentButton'
 import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
-import { auth, firestore } from '../config/firebase'
+import { auth, firestore, fsdb } from '../config/firebase'
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
 
 
 
@@ -27,8 +28,21 @@ const LoginEnterCredentialsScreen = () => {
 
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
-          navigation.replace("home");
-        } 
+          async function nextScreen() {
+          const docRef = doc(fsdb, "users", auth.currentUser.uid);
+          const docSnap = await getDoc(docRef);
+          if(docSnap.data().specialistData != null)
+            {
+              navigation.replace("SpecialistMenu");
+            }
+          else
+            {
+              navigation.replace("home");
+            }
+          }
+          nextScreen()
+        
+          } 
       })
   
       return unsubscribe;
@@ -77,7 +91,7 @@ const LoginEnterCredentialsScreen = () => {
 
             <CustomTextInput text={"E-MAIL ADDRESS"} setText={setEmail}>
             </CustomTextInput>
-            <SecureTextInput text={"PASSWORD"} setPassword={setPassword}>
+            <SecureTextInput text={"PASSWORD"} setText={setPassword}>
             </SecureTextInput>
             <PurpleButton text={"AUTHENTICATE"} onPress={handleLogInByEnteringCredentials}>
             </PurpleButton>

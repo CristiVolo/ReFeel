@@ -15,6 +15,9 @@ import ForgotPasswordScreen from './screens/ForgotPasswordScreen'
 import MapScreen from './screens/MapScreen';
 import OfficePageScreen from './screens/OfficePageScreen';
 import MakeAppointmentScreen from './screens/MakeAppointmentScreen';
+import AppointmentListForUserScreen from './screens/AppointmentListForUserScreen';
+import AppointmentListForSpecialistScreen from './screens/AppointmentListForSpecialistScreen';
+import SpecialistMenuScreen from './screens/SpecialistMenuScreen';
 
 
 const Stack = createNativeStackNavigator(
@@ -25,9 +28,12 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
+        <Stack.Screen options={{headerShown: false}} name="SpecialistMenu" component={SpecialistMenuScreen} />
+        <Stack.Screen options={{headerShown: false}} name="AppointmentListForUser" component={AppointmentListForUserScreen} />
+        <Stack.Screen options={{headerShown: false}} name="AppointmentListForSpecialist" component={AppointmentListForSpecialistScreen} />
         <Stack.Screen options={{headerShown: false}} name="OfficePage" component={OfficePageScreen} />
         <Stack.Screen options={{headerShown: false}} name="MakeAppointment" component={MakeAppointmentScreen} />
-        <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginEnterCredentials" component={LoginEnterCredentialsScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginSendEmail" component={LoginSendEmailScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginSendSMS" component={LoginSendSMSScreen} />
