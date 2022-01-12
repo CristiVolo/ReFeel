@@ -18,7 +18,7 @@ import MakeAppointmentScreen from './screens/MakeAppointmentScreen';
 import AppointmentListForUserScreen from './screens/AppointmentListForUserScreen';
 import AppointmentListForSpecialistScreen from './screens/AppointmentListForSpecialistScreen';
 import SpecialistMenuScreen from './screens/SpecialistMenuScreen';
-
+import AppointmentRequestScreen from './screens/AppointmentRequestScreen'
 
 const Stack = createNativeStackNavigator(
   
@@ -32,6 +32,7 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="SpecialistMenu" component={SpecialistMenuScreen} />
         <Stack.Screen options={{headerShown: false}} name="AppointmentListForUser" component={AppointmentListForUserScreen} />
         <Stack.Screen options={{headerShown: false}} name="AppointmentListForSpecialist" component={AppointmentListForSpecialistScreen} />
+        <Stack.Screen options={{headerShown: false}} name="AppointmentRequest" component={AppointmentRequestScreen} />
         <Stack.Screen options={{headerShown: false}} name="OfficePage" component={OfficePageScreen} />
         <Stack.Screen options={{headerShown: false}} name="MakeAppointment" component={MakeAppointmentScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginEnterCredentials" component={LoginEnterCredentialsScreen} />

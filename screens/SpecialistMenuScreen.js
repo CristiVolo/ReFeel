@@ -12,13 +12,16 @@ const LoginScreen = () => {
     const navigation = useNavigation()
     const handleSeeAppointments = async () => {
         const userRef = doc(fsdb, 'users', auth.currentUser.uid);
-        const q = query(collection(fsdb, "appointments"), where("specialist", "==", userRef));
+        const q = query(collection(fsdb, "appointments"), where("specialist", "==", userRef), where("status", "==", true))
         const querySnapshot = await getDocs(q);
         navigation.navigate('AppointmentListForSpecialist', {querySnapshot: querySnapshot});
     }
 
-    const handleSeeRequests = () =>{
-
+    const handleSeeRequests = async () => {
+        const userRef = doc(fsdb, 'users', auth.currentUser.uid);
+        const q = query(collection(fsdb, "appointments"), where("specialist", "==", userRef), where("status", "==", false))
+        const querySnapshot = await getDocs(q);
+        navigation.navigate('AppointmentRequest', {querySnapshot: querySnapshot});
     }
 
     const handleSignOut = () => {
@@ -45,14 +48,10 @@ const LoginScreen = () => {
         </PurpleButton>
         <PurpleButton text={"SEE REQUESTS"} onPress={handleSeeRequests}>
         </PurpleButton>
-
-        <TouchableOpacity
-        onPress={handleSignOut}
-        style={styles.button}
-      >
-        <Text style={styles.buttonText}>Sign out</Text>
-      </TouchableOpacity>
         
+       </View>
+       <View>
+       <PurpleButton text={"SIGN OUT"} onPress={handleSignOut}></PurpleButton>
        </View>
       
     </KeyboardAvoidingView>

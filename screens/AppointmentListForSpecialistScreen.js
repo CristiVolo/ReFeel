@@ -12,12 +12,14 @@ const AppointmentListForSpecialistScreen = ({ navigation: { navigate }, route })
     let dateExample = '11.01.2022'
     let timeExample = '14:00'
     let descriptionExample = 'ceva descriere a unei probleme'
-    
+    let array=[];
     const defaultFunction = () => {
         
     }
 
-    
+    const handleBack = () =>{
+        navigate('SpecialistMenu');
+    }
 
     return (
         <KeyboardAvoidingView
@@ -34,14 +36,21 @@ const AppointmentListForSpecialistScreen = ({ navigation: { navigate }, route })
         <View style={styles.buttonContainer}>
             {
                 route.params.querySnapshot.forEach((doc) => {
-                    <AppointmentBoxSpecialist name={doc.data().firstName+doc.data().lastName} date={doc.data().appointmentDate} time={timeExample} description={doc.data().shortDescription} clear={defaultFunction}>
-                    </AppointmentBoxSpecialist>
+                    array.push(<AppointmentBoxSpecialist name={doc.data().firstName+" "+doc.data().lastName} date={doc.data().date} time={doc.data().time+":00"} description={doc.data().shortDescription} clear={defaultFunction}>
+                    </AppointmentBoxSpecialist>)
+                  })
+            }
+            {
+                array.map((item, index) => {
+                    return (
+                      item
+                    )
                   })
             }
         </View>
         </ScrollView>
         <View style={styles.button}>
-        <PurpleButton text={'BACK'} onPress={defaultFunction}></PurpleButton>
+        <PurpleButton text={'BACK'} onPress={handleBack}></PurpleButton>
         </View>
     </KeyboardAvoidingView>
     )

@@ -11,7 +11,13 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
 const MakeAppointmentScreen = ({ navigation: { navigate }, route }) => {
-  
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [age, setAge] = useState('')
+  const [gender, setGender] = useState('')
+  const [description, setDescription] = useState('')
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
 
     const defaultFunction=()=> {
     }
@@ -45,6 +51,14 @@ const MakeAppointmentScreen = ({ navigation: { navigate }, route }) => {
 
         <Text style={styles.textStyle}>Enter a short description of problem : </Text>
         <CustomTextInput text={"Description"} setText={defaultFunction}>
+        </CustomTextInput>
+
+        <Text style={styles.textStyle}>Enter date : </Text>
+        <CustomTextInput text={"ZZ.LL.YYYY"} setText={defaultFunction}>
+        </CustomTextInput>
+
+        <Text style={styles.textStyle}>Enter time : </Text>
+        <CustomTextInput text={"e.g: 14"} setText={defaultFunction}>
         </CustomTextInput>
 
         <PurpleButton text={"COMFIRM"} onPress={defaultFunction}>
