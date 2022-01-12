@@ -20,6 +20,8 @@ const MapScreen = () => {
     
     const nearbySearchTemplate = 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?'
 
+    const placeDetailsTemplate = 'https://maps.googleapis.com/maps/api/place/details/json?'
+
     const [ radius, setRadius ] = React.useState('10000')
 
     const API_KEY = "AIzaSyAqun3jSd8xtOHVfJVeTLfmofqeTxmhmFk"
@@ -39,15 +41,37 @@ const MapScreen = () => {
         .then(function (response) {
             //console.log(JSON.parse(JSON.stringify(response.data)));
             let nearbySearchData = response.data;
-
             // Iterate through the JSON file to get what we need
             for(const i in nearbySearchData["results"]) {
-                console.log(nearbySearchData["results"][i]);
-                console.log('-------------------');
-                // console.log(nearbySearchData["results"][i]["name"]);
-                // console.log(nearbySearchData["results"][i]["geometry"]["location"]);
-                // console.log(nearbySearchData["results"][i]["vicinity"]);
-                console.log('-------------------\n');
+
+                let placeId = nearbySearchData["results"][i]["place_id"];
+                
+                var placeDetailsconfig = {
+                    method: 'get',
+                    url: placeDetailsTemplate + 'place_id=' + placeId + '&fields=' + 'formatted_phone_number' + '&key=' + API_KEY,
+                    headers: {}
+                  };
+
+                // Use place details to request phone number, such as phone numbers, for examples
+                axios(placeDetailsconfig)
+                .then(function (placeDetailsResponse) {
+                    let placeDetailData = placeDetailsResponse.data;
+                    let formattedPhoneNumber = placeDetailData['result']['formatted_phone_number']
+                    console.log(formattedPhoneNumber);
+                    console.log('-------------------')
+                })
+                .catch(function (placeDetailsError) {
+                    console.log(placeDetailsError);
+                });
+                // // display only if vicinity matches
+                
+                //     console.log(nearbySearchData["results"][i]);
+                //     console.log('-------------------');
+                //     // console.log(nearbySearchData["results"][i]["name"]);
+                //     // console.log(nearbySearchData["results"][i]["geometry"]["location"]);
+                //     // console.log(nearbySearchData["results"][i]["vicinity"]);
+                //     console.log('-------------------\n');
+                
             }
         })
         .catch(function (error) {

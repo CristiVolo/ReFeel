@@ -13,9 +13,6 @@ const OfficePageScreen = ({ navigation: { navigate } }) => {
     let userNameExample = 'PopescuSilvia1997'
     let emailExample = 'dr.silviapopescu@gmail.com'
 
-    const defaultFunction = () => {
-
-    }
 
     const handleAppointment = () => {
         navigate("MakeAppointment");
