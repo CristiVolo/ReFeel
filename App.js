@@ -25,9 +25,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen options={{headerShown: false}} name="Map" component={MapScreen} />
+        <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
         <Stack.Screen options={{headerShown: false}} name="OfficePage" component={OfficePageScreen} />
         <Stack.Screen options={{headerShown: false}} name="MakeAppointment" component={MakeAppointmentScreen} />
-        <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginEnterCredentials" component={LoginEnterCredentialsScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginSendEmail" component={LoginSendEmailScreen} />
         <Stack.Screen options={{headerShown: false}} name="LoginSendSMS" component={LoginSendSMSScreen} />
@@ -36,7 +37,6 @@ export default function App() {
         <Stack.Screen options={{headerShown: false}} name="SpecialistData" component={SpecialistDataScreen} />
         <Stack.Screen options={{headerShown: false}} name="home" component={home} />
         <Stack.Screen options={{headerShown: false}} name="ForgotPassword" component={ForgotPasswordScreen} />
-        <Stack.Screen options={{headerShown: false}} name="Map" component={MapScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
