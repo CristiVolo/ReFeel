@@ -19,7 +19,9 @@ purpleButton:{
     borderRadius: 10,
     alignItems: 'center',
     marginBottom: 20,
-    marginTop: 20
+    marginTop: 20,
+    marginRight: 5,
+    marginLeft: 5
 },
 itemText:{
     color: '#FFE600',
