@@ -18,6 +18,10 @@ const OfficePageScreen = ({ navigation: { navigate } }) => {
         navigate("MakeAppointment");
     }
 
+    const defaultFunction = () =>{
+      
+    }
+
     return (
         <KeyboardAvoidingView
       style={styles.container}
