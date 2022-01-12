@@ -3,11 +3,20 @@ import React, {useEffect} from 'react'
 import { KeyboardAvoidingView,StyleSheet, Text,TextInput, View, TouchableOpacity, BackHandler, Alert } from 'react-native'
 import PurpleButton from '../components/PurpleButton'
 import TransparentButton from '../components/TransparentButton'
+import { auth } from '../config/firebase'
+import { signOut } from "firebase/auth";
 
 const LoginScreen = () => {
     const navigation = useNavigation()
     const handleLogInByEnteringCredentials = () => {
-      navigation.replace("LoginEnterCredentials");
+      if(auth.currentUser != null) {
+        signOut(auth).then(() => {
+          navigation.replace("LoginEnterCredentials");
+          }).catch((error) => {
+          // An error happened.
+          });
+      }
+      else navigation.replace("LoginEnterCredentials");
     }
 
     const handleLogInBySendingEmail = () => {

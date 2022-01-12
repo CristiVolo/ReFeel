@@ -8,7 +8,7 @@ import SecureTextInput from '../components/SecureTextInput'
 import { auth, fsdb } from '../config/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { collection, addDoc, setDoc, doc, GeoPoint, updateDoc } from "firebase/firestore"; 
-import uuid from 'react-native-uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -29,7 +29,7 @@ const SpecialistDataScreen = () => {
     
     // ID's for the user and dataSet documents
     let userId = auth.currentUser.uid;
-    let dataSetId = uuid.v4();
+    let dataSetId = uuidv4();
     
     // Create the dataset document
     setDoc(doc(fsdb, "specialistDataSets", dataSetId), {

@@ -5,9 +5,9 @@ import PurpleButton from '../components/PurpleButton'
 import TransparentButton from '../components/TransparentButton'
 import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
-import { auth, firestore, fsdb } from '../config/firebase'
+import { auth, fsdb } from '../config/firebase'
 import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, getDoc } from "firebase/firestore"; 
 
 
 
@@ -28,17 +28,18 @@ const LoginEnterCredentialsScreen = () => {
 
       const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
+          console.log('In authstatechanged');
           async function nextScreen() {
-          const docRef = doc(fsdb, "users", auth.currentUser.uid);
-          const docSnap = await getDoc(docRef);
-          if(docSnap.data().specialistData != null)
-            {
-              navigation.replace("SpecialistMenu");
-            }
-          else
-            {
-              navigation.replace("home");
-            }
+            const docRef = doc(fsdb, "users", auth.currentUser.uid);
+            const docSnap = await getDoc(docRef);
+            if(docSnap.data().specialistData != null)
+              {
+                navigation.replace("SpecialistMenu");
+              }
+            else
+              {
+                navigation.replace("Map");
+              }
           }
           nextScreen()
         
@@ -57,7 +58,8 @@ const LoginEnterCredentialsScreen = () => {
       .then((userCredential) => {
         // Signed in 
         const user = userCredential.user;
-        // ...
+        // Retrieve the specialized data set from its collecdtion; if mull, we deal with a default user, who is sent to
+        console.log('In authstatechanged');
       })
       .catch((error) => {
         const errorCode = error.code;
