@@ -56,7 +56,8 @@ const MapScreen = () => {
                 axios(placeDetailsconfig)
                 .then(function (placeDetailsResponse) {
                     let placeDetailData = placeDetailsResponse.data;
-                    console.log(placeDetailData['result']['formatted_phone_number']);
+                    let formattedPhoneNumber = placeDetailData['result']['formatted_phone_number']
+                    console.log(formattedPhoneNumber);
                     console.log('-------------------')
                 })
                 .catch(function (placeDetailsError) {
