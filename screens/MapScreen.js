@@ -5,6 +5,9 @@ import { render } from 'react-dom';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import axios from 'axios';
 import { extractQuerystring } from '@firebase/util';
+import OfficeMarker from '../components/OfficeMarker';
+import { auth, fsdb } from '../config/firebase';
+import { addDoc, setDoc, doc, updateDoc, getDoc } from "firebase/firestore"; 
 
 const MapScreen = () => {
 
@@ -36,15 +39,37 @@ const MapScreen = () => {
       headers: {}
     };
 
+    async function renderOfficeMarker(idx) {
+        const docRef = doc(fsdb, "specialistDataSet", idx);
+        const docSnap = await getDoc(docRef);
+        if(docSnap.data() != null)
+        {
+            return(
+                <OfficeMarker
+                    mLocation = {docSnap.data().officeLocation}
+                    mText = {docSnap.data().shortDescription}
+                    mVicinity = {docSnap.data().officeVicinity}
+                >
+                </OfficeMarker>
+            );
+        }
+      }
+
     const handleNearbySearch = async () => {
         axios(nearbySearchconfig)
         .then(function (response) {
+
             //console.log(JSON.parse(JSON.stringify(response.data)));
             let nearbySearchData = response.data;
+
             // Iterate through the JSON file to get what we need
             for(const i in nearbySearchData["results"]) {
 
-                let placeId = nearbySearchData["results"][i]["place_id"];
+                let singleResult = nearbySearchData["results"][i];
+                let name = singleResult["name"]
+                let location = JSON.stringify(singleResult["geometry"]["location"])
+                let placeId = singleResult["place_id"];
+                let vicinity = singleResult["vicinity"];
                 
                 var placeDetailsconfig = {
                     method: 'get',
@@ -55,10 +80,21 @@ const MapScreen = () => {
                 // Use place details to request phone number, such as phone numbers, for examples
                 axios(placeDetailsconfig)
                 .then(function (placeDetailsResponse) {
+                    
                     let placeDetailData = placeDetailsResponse.data;
-                    let formattedPhoneNumber = placeDetailData['result']['formatted_phone_number']
+                    let formattedPhoneNumber = placeDetailData['result']['formatted_phone_number'];
+
                     console.log(formattedPhoneNumber);
-                    console.log('-------------------')
+                    console.log('-------------------');
+
+                    // Markers that facilitate navigation to each OfficePage
+                    setDoc(doc(fsdb, "specialistDataSets", i), {
+                        officeVicinity: vicinity,
+                        shortDescription: name,
+                        officeLocation: location
+                    })
+
+                    renderOfficeMarker(i);
                 })
                 .catch(function (placeDetailsError) {
                     console.log(placeDetailsError);
@@ -125,7 +161,7 @@ const MapScreen = () => {
             >
                 <Marker
                     coordinate={pin}
-                    pinColor={'orange'}
+                    pinColor={'red'}
                     draggable={true}
                     onDragStart={(e) => {
                         console.log("Drag start", e.nativeEvent.coordinate)

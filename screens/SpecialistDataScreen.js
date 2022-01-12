@@ -7,7 +7,7 @@ import CustomTextInput from '../components/TextInput'
 import SecureTextInput from '../components/SecureTextInput'
 import { auth, fsdb } from '../config/firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, addDoc, setDoc, doc, GeoPoint, updateDoc } from "firebase/firestore"; 
+import { addDoc, setDoc, doc, updateDoc } from "firebase/firestore"; 
 import { v4 as uuidv4 } from 'uuid';
 
 
