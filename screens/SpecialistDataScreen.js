@@ -33,12 +33,9 @@ const SpecialistDataScreen = () => {
     
     // Create the dataset document
     setDoc(doc(fsdb, "specialistDataSets", dataSetId), {
-      officeCity: officeCity,
       officeLocation: officeLocation,
-      officeNumber: officeNumber,
-      officeStreet: officeStreet,
-      shortDescription: shortDescription,
-      website: website
+      officeVicinity: "Str." + officeStreet + ", Nr." + officeNumber + ", " + officeCity,
+      shortDescription: shortDescription
     })
 
     // Reference to user and dataset document
@@ -49,6 +46,8 @@ const SpecialistDataScreen = () => {
     updateDoc(userRef, {
       specialistData: dataSetRef
     })
+
+    navigation.navigate('SpecialistMenu');
 
 
   }

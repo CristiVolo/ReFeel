@@ -3,8 +3,9 @@ import React from 'react'
 import { KeyboardAvoidingView,StyleSheet, Text,TextInput, View, TouchableOpacity } from 'react-native'
 import PurpleButton from '../components/PurpleButton'
 import TransparentButton from '../components/TransparentButton'
+import { Route } from '@react-navigation/native'
 
-const OfficePageScreen = ({ navigation: { navigate } }) => {
+const OfficePageScreen = ({ navigation: { navigate } , route}) => {
     
     let officeNameExample = 'Dr. POPESCU SILVIA - Medic Specialist PSIHIATRIE PEDIATRICĂ; Competență în PSIHOTERAPIE'
     let addressExample = 'Intrarea Martir Ianoş Paris 11, Timișoara'
@@ -13,6 +14,7 @@ const OfficePageScreen = ({ navigation: { navigate } }) => {
     let userNameExample = 'PopescuSilvia1997'
     let emailExample = 'dr.silviapopescu@gmail.com'
 
+    const { vicinity, shortDescription } = route.params;
 
     const handleAppointment = () => {
         navigate("MakeAppointment");
@@ -32,9 +34,9 @@ const OfficePageScreen = ({ navigation: { navigate } }) => {
         })()
       }
     >
-        <Text style={styles.textStyle}s>{officeNameExample}</Text>
+        <Text style={styles.textStyle}s>{JSON.stringify(shortDescription)}</Text>
         <View style={styles.buttonContainer}>
-        <Text style={styles.textStyle}s>{addressExample}</Text>
+        <Text style={styles.textStyle}s>{JSON.stringify(vicinity)}</Text>
         <Text style={styles.textStyle}s>{siteExample}</Text>
         <Text style={styles.textStyle}s>{phoneExample}</Text>
         <Text style={styles.textStyle}s>{userNameExample}</Text>
