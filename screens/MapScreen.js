@@ -56,87 +56,94 @@ const MapScreen = () => {
 
     const [keyword, setkeyword] = React.useState('psihologie')
 
-    var nearbySearchconfig = {
-      method: 'get',
-      url: nearbySearchTemplate + 'location=' + region.latitude + '%2C' + region.longitude + '&radius=' + radius + '&type=' + type + '&keyword=' + keyword + '&key=' + API_KEY,
-      headers: {}
-    };
+    const [visible, setVisible] = React.useState(false)
+    const [prompt, setPrompt] = React.useState(false);
 
-    async function renderOfficeMarker(idx) {
-        const docRef = doc(fsdb, "specialistDataSet", idx);
-        const docSnap = await getDoc(docRef);
-        if(docSnap.data() != null)
-        {
-            return(
-                <OfficeMarker
-                    mLocation = {docSnap.data().officeLocation}
-                    mText = {docSnap.data().shortDescription}
-                    mVicinity = {docSnap.data().officeVicinity}
-                >
-                </OfficeMarker>
-            );
-        }
-      }
+    const [ markLocation, setMarkLocation ] = React.useState({
+        latitude: 45.7379433,
+        longitude: 21.2189823
+    })
+    const [ markText, setMarkText ] = React.useState('')
+    const [ markVicinity, setMarkVicinity ] = React.useState('')
 
-    const handleNearbySearch = async () => {
-        axios(nearbySearchconfig)
-        .then(function (response) {
+    // var nearbySearchconfig = {
+    //   method: 'get',
+    //   url: nearbySearchTemplate + 'location=' + region.latitude + '%2C' + region.longitude + '&radius=' + radius + '&type=' + type + '&keyword=' + keyword + '&key=' + API_KEY,
+    //   headers: {}
+    // };
 
-            //console.log(JSON.parse(JSON.stringify(response.data)));
-            let nearbySearchData = response.data;
+    // function renderOfficeMarker(vicinity, shortDescription, location) {
+    //         console.log('inside render office marker')
+    //         return(
+    //             <OfficeMarker
+    //                 mLocation = {location}
+    //                 mText = {shortDescription}
+    //                 mVicinity = {vicinity}
+    //             >
+    //             </OfficeMarker>
+    //         );
 
-            // Iterate through the JSON file to get what we need
-            for(const i in nearbySearchData["results"]) {
+    //   }
 
-                let singleResult = nearbySearchData["results"][i];
-                let name = singleResult["name"]
-                let location = JSON.stringify(singleResult["geometry"]["location"])
-                let placeId = singleResult["place_id"];
-                let vicinity = singleResult["vicinity"];
+    // const handleNearbySearch = async () => {
+    //     axios(nearbySearchconfig)
+    //     .then(function (response) {
+
+    //         //console.log(JSON.parse(JSON.stringify(response.data)));
+    //         let nearbySearchData = response.data;
+
+    //         // Iterate through the JSON file to get what we need
+    //         for(const i in nearbySearchData["results"]) {
+
+    //             let singleResult = nearbySearchData["results"][i];
+    //             let name = singleResult["name"]
+    //             let location = JSON.stringify(singleResult["geometry"]["location"])
+    //             let placeId = singleResult["place_id"];
+    //             let vicinity = singleResult["vicinity"];
                 
-                var placeDetailsconfig = {
-                    method: 'get',
-                    url: placeDetailsTemplate + 'place_id=' + placeId + '&fields=' + 'formatted_phone_number' + '&key=' + API_KEY,
-                    headers: {}
-                  };
+    //             var placeDetailsconfig = {
+    //                 method: 'get',
+    //                 url: placeDetailsTemplate + 'place_id=' + placeId + '&fields=' + 'formatted_phone_number' + '&key=' + API_KEY,
+    //                 headers: {}
+    //               };
 
-                // Use place details to request phone number, such as phone numbers, for examples
-                axios(placeDetailsconfig)
-                .then(function (placeDetailsResponse) {
+    //             // Use place details to request phone number, such as phone numbers, for examples
+    //             axios(placeDetailsconfig)
+    //             .then(function (placeDetailsResponse) {
                     
-                    let placeDetailData = placeDetailsResponse.data;
-                    let formattedPhoneNumber = placeDetailData['result']['formatted_phone_number'];
+    //                 let placeDetailData = placeDetailsResponse.data;
+    //                 let formattedPhoneNumber = placeDetailData['result']['formatted_phone_number'];
 
-                    console.log(formattedPhoneNumber);
-                    console.log('-------------------');
+    //                 console.log(formattedPhoneNumber);
+    //                 console.log('-------------------');
 
-                    // Markers that facilitate navigation to each OfficePage
-                    setDoc(doc(fsdb, "specialistDataSets", i), {
-                        officeVicinity: vicinity,
-                        shortDescription: name,
-                        officeLocation: location
-                    })
+    //                 // Markers that facilitate navigation to each OfficePage
+    //                 setDoc(doc(fsdb, "specialistDataSets", i), {
+    //                     officeVicinity: vicinity,
+    //                     shortDescription: name,
+    //                     officeLocation: location
+    //                 })
 
-                    renderOfficeMarker(i);
-                })
-                .catch(function (placeDetailsError) {
-                    console.log(placeDetailsError);
-                });
-                // // display only if vicinity matches
+    //                 renderOfficeMarker(i);
+    //             })
+    //             .catch(function (placeDetailsError) {
+    //                 console.log(placeDetailsError);
+    //             });
+    //             // // display only if vicinity matches
                 
-                //     console.log(nearbySearchData["results"][i]);
-                //     console.log('-------------------');
-                //     // console.log(nearbySearchData["results"][i]["name"]);
-                //     // console.log(nearbySearchData["results"][i]["geometry"]["location"]);
-                //     // console.log(nearbySearchData["results"][i]["vicinity"]);
-                //     console.log('-------------------\n');
+    //             //     console.log(nearbySearchData["results"][i]);
+    //             //     console.log('-------------------');
+    //             //     // console.log(nearbySearchData["results"][i]["name"]);
+    //             //     // console.log(nearbySearchData["results"][i]["geometry"]["location"]);
+    //             //     // console.log(nearbySearchData["results"][i]["vicinity"]);
+    //             //     console.log('-------------------\n');
                 
-            }
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-    }
+    //         }
+    //     })
+    //     .catch(function (error) {
+    //         console.log(error);
+    //     });
+    //}
 
     return (
         <SafeAreaView style={styles.temporary}>
@@ -153,10 +160,45 @@ const MapScreen = () => {
                     GooglePlacesSearchQuery={{
                         rankby: "distance"
                     }}
-                    onPress={(data, details = null) => {
+                    onPress={(data, details) => {
                         // 'details' is provided when fetchDetails = true
-                        //console.log(data, details);
-                        handleNearbySearch();
+                        //console.log(data, "\n------------\n", details);
+                        //handleNearbySearch();
+                        let resultData = data;
+                        let resultDetails = details;
+                  
+                        let shortDescription = resultData["description"]
+                        let location = JSON.stringify(resultDetails["geometry"]["location"])
+                        let formattedPhoneNumber = resultDetails['formatted_phone_number']
+                        let vicinity = resultDetails["vicinity"];
+                        let name = resultDetails["name"]
+        
+                        // Markers that facilitate navigation to each OfficePage
+                        setDoc(doc(fsdb, "specialistDataSets", name), {
+                            officeVicinity: vicinity,
+                            shortDescription: shortDescription,
+                            officeLocation: location
+                        })
+                        let parsedLocation = JSON.parse(location)
+                        setMarkLocation({
+                            latitude: parsedLocation["lat"],
+                            longitude: parsedLocation["lng"]
+                        })
+                        setMarkText(shortDescription)
+                        setMarkVicinity(vicinity)
+                        
+                        setPrompt(true);
+                        
+                        // Use place details to request phone number, such as phone numbers, for examples
+                        // // display only if vicinity matches
+                        
+                        //     console.log(nearbySearchData["results"][i]);
+                        //     console.log('-------------------');
+                        //     // console.log(nearbySearchData["results"][i]["name"]);
+                        //     // console.log(nearbySearchData["results"][i]["geometry"]["location"]);
+                        //     // console.log(nearbySearchData["results"][i]["vicinity"]);
+                        //     console.log('-------------------\n');
+                            
                     }}
                     query={{
                         key: API_KEY,
@@ -186,7 +228,7 @@ const MapScreen = () => {
                     longitudeDelta: 0.0421
                 }}
             >
-                <Marker
+                {/* <Marker
                     coordinate={pin}
                     pinColor={'red'}
                     draggable={true}
@@ -205,11 +247,22 @@ const MapScreen = () => {
                             Orange Marker
                         </Text>
                     </Callout>
-                </Marker>
-                <Circle
+                </Marker> */}
+                {/* <Circle
                     center={pin}
                     radius={1000}
-                 />
+                 /> */}
+                 <View>
+                     {
+                         prompt &&
+                        <OfficeMarker
+                            mLocation = {markLocation}
+                             mText = {markText}
+                            mVicinity = {markVicinity}
+                        >
+                        </OfficeMarker>
+                    }
+                 </View>
             </MapView>
         </SafeAreaView>
     );

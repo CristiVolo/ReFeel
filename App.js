@@ -29,8 +29,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         
+      <Stack.Screen options={{headerShown: false}} name="Map" component={MapScreen} />
         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
-        <Stack.Screen options={{headerShown: false}} name="Map" component={MapScreen} />
         <Stack.Screen options={{headerShown: false}} name="SpecialistMenu" component={SpecialistMenuScreen} />
         <Stack.Screen options={{headerShown: false}} name="AppointmentListForUser" component={AppointmentListForUserScreen} />
         <Stack.Screen options={{headerShown: false}} name="AppointmentListForSpecialist" component={AppointmentListForSpecialistScreen} />
