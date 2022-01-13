@@ -47,7 +47,7 @@ const SpecialistDataScreen = () => {
       specialistData: dataSetRef
     })
 
-    
+    navigation.navigate('SpecialistMenu');
 
 
   }
